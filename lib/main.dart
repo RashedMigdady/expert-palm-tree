@@ -36,7 +36,7 @@ class _MyAppState extends State<MyApp> {
 
         ),
         body: Container(
-          child : Question(_question[0]),
+          child : Question(_question[1]),
 
         ),
       ),
