@@ -1,3 +1,7 @@
+//import 'dart:html';
+
+import 'package:app02/quiz.dart';
+import 'package:app02/result.dart';
 import 'package:flutter/material.dart';
 import 'question.dart';
 import 'answer.dart';
@@ -14,9 +18,13 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   int _questionIndex = 0;
 
-  void answerQuestion(){
-    if (_questionIndex == 2)
-      _questionIndex = -1;
+  void _resetQuiz(){
+    setState(() {
+      _questionIndex = 0;
+    });
+  }
+
+  void answerQuestion() {
     setState(() {
       _questionIndex = _questionIndex + 1;
     });
@@ -25,20 +33,19 @@ class _MyAppState extends State<MyApp> {
     print(_questionIndex);
   }
 
-  final List<Map<String,Object>> _question = [
+  final List<Map<String, Object>> _question = [
     {
-      'questionText':'What\'s your favorite Color?',
-      'answers':["Red" , "Black" , "Blue" , "Green"]
+      'questionText': 'What\'s your favorite Color?',
+      'answers': ["Red", "Black", "Blue", "Green"]
     },
     {
-      'questionText':'What\'s your favorite Animal?',
-      'answers':["Tiger" , "Bird" , "Sneak" , "Lion"]
+      'questionText': 'What\'s your favorite Animal?',
+      'answers': ["Tiger", "Bird", "Sneak", "Lion"]
     },
     {
-      'questionText':'What\'s your favorite instructor?',
-      'answers':["Moh" , "Ali" , "Khalid" , "Jameel"]
+      'questionText': 'What\'s your favorite instructor?',
+      'answers': ["Mohammad", "Ali", "Khalid", "Jameel"]
     }
-
   ];
 
   @override
@@ -49,18 +56,12 @@ class _MyAppState extends State<MyApp> {
             title: Text("Quiz App"),
           ),
           body: Container(
-            //width: double.infinity,
-            child: Column(children: <Widget>[
-              Question(_question[_questionIndex]['questionText']),
-
-              ...(_question[_questionIndex]['answers'] as List<String>).map((ans){
-                return Answer(answerQuestion , ans);
-                }).toList(),
-
-
-
-            ]),
-          )),
+              //width: double.infinity,
+              child: _questionIndex < _question.length
+                  ? Quiz(_question, answerQuestion, _questionIndex)
+                  : Center(
+                    child: Result(_resetQuiz),
+                  ))),
     );
   }
 }
