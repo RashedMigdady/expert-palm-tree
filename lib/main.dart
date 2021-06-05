@@ -15,7 +15,7 @@ class _MyAppState extends State<MyApp> {
   int _questionIndex = 0;
 
   void answerQuestion(){
-    if (_questionIndex == 1)
+    if (_questionIndex == 2)
       _questionIndex = -1;
     setState(() {
       _questionIndex = _questionIndex + 1;
@@ -25,9 +25,20 @@ class _MyAppState extends State<MyApp> {
     print(_questionIndex);
   }
 
-  final _question = [
-    'What\'s your favorite Color?',
-    'What\'s your favorite Animal?'
+  final List<Map<String,Object>> _question = [
+    {
+      'questionText':'What\'s your favorite Color?',
+      'answers':["Red" , "Black" , "Blue" , "Green"]
+    },
+    {
+      'questionText':'What\'s your favorite Animal?',
+      'answers':["Tiger" , "Bird" , "Sneak" , "Lion"]
+    },
+    {
+      'questionText':'What\'s your favorite instructor?',
+      'answers':["Moh" , "Ali" , "Khalid" , "Jameel"]
+    }
+
   ];
 
   @override
@@ -40,10 +51,12 @@ class _MyAppState extends State<MyApp> {
           body: Container(
             //width: double.infinity,
             child: Column(children: <Widget>[
-              Question(_question[_questionIndex]),
-              Answer(answerQuestion, "Answer 1"),
-              Answer(answerQuestion, "Answer 2"),
-              Answer(answerQuestion, "Answer 3")
+              Question(_question[_questionIndex]['questionText']),
+
+              ...(_question[_questionIndex]['answers'] as List<String>).map((ans){
+                return Answer(answerQuestion , ans);
+                }).toList(),
+
 
 
             ]),
